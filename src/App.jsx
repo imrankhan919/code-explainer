@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 const App = () => {
   const [explaination, setExplaination] = useState("Loading...");
 
+  const [previousExplaination, setPreviousExplaination] = useState([]);
+
   console.log(explaination);
 
   const theme = createTheme({
@@ -28,11 +30,9 @@ const App = () => {
       },
       body: JSON.stringify({
         model: "text-davinci-003",
-        prompt:
-          "Explain this programming code in simple english and try to give bullet points" +
-          text,
+        prompt: "kindly explain this code in simple language" + text,
         temperature: 0.5,
-        max_tokens: 60,
+        max_tokens: 600,
         top_p: 1.0,
         frequency_penalty: 0.8,
         presence_penalty: 0.0,
@@ -46,6 +46,7 @@ const App = () => {
       );
       const data = await response.json();
       setExplaination(data.choices[0].text);
+      setPreviousExplaination([data.choices[0].text, ...previousExplaination]);
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +55,11 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
-      <Home explainCode={explainCode} explaination={explaination} />
+      <Home
+        explainCode={explainCode}
+        explaination={explaination}
+        previousExplaination={previousExplaination}
+      />
     </ThemeProvider>
   );
 };

@@ -7,8 +7,9 @@ import {
   Box,
 } from "@mui/material";
 import React, { useState } from "react";
+import CardContainer from "../components/CardContainer";
 
-const Home = ({ explainCode, explaination }) => {
+const Home = ({ explainCode, explaination, previousExplaination }) => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -84,6 +85,8 @@ const Home = ({ explainCode, explaination }) => {
           </Box>
         </Modal>
       </div>
+
+      <CardContainer previousExplaination={previousExplaination} />
     </Container>
   );
 };
